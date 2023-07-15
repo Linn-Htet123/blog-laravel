@@ -3,30 +3,22 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Edit article</h3>
+                <h3>Edit category</h3>
                 <hr>
             </div>
             <div class="col-12">
-                <form action="{{route('article.update',$article->id)}}" method="post">
+                <form action="{{route('category.update',$category->id)}}" method="post">
                     @csrf
                     @method('put')
                     <div class="mb-3">
                         <label class=" form-label" for="">Title</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{old('title',$article->title)}}">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{old('title',$category->title)}}">
                         @error('title')
                         <div class=" invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class=" form-label" for="">Description</label>
-                        <textarea name="description" class=" form-control @error('description') is-invalid @enderror" rows="7">{{old('description',$article->description)}}</textarea>
-                        @error('description')
-                        <div class=" invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <button class=" btn btn-primary">Edit article</button>
+                    <button class=" btn btn-primary">Edit category</button>
                 </form>
             </div>
         </div>

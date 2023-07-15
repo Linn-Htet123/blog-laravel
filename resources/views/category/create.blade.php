@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>create new article</h3>
+                <h3>create new category</h3>
                 <hr>
             </div>
             <div class="col-12">
-                <form action="{{route('article.store')}}" method="post">
+                <form action="{{route('category.store')}}" method="post">
                     @csrf
 
                     <div class="mb-3">
@@ -18,15 +18,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class=" form-label" for="">Description</label>
-                        <textarea name="description" class=" form-control @error('description') is-invalid @enderror" rows="7"></textarea>
-                        @error('description')
-                        <div class=" invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
 
-                    <button class=" btn btn-primary">Create article</button>
+                    <button class=" btn btn-primary">Create category</button>
                 </form>
             </div>
         </div>
