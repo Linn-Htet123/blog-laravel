@@ -1,0 +1,59 @@
+Github Admin Token : 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
+
+
+git init                    (Git Initialized)
+git status                  (Show Files in Modified and Staging Area)
+
+git add                     (Add Files to Staging Area)
+git rm --cached <filename>  (Remove Files from Staging Area)
+
+git commit -m <message>     (Add Files to Commit Area) [-m = message]
+git log                     (Show Commit History)
+git log --oneline           (Show Commit History in More Simplified)
+
+
+Working with commit history
+---------------------------
+Check out commit - Safe (This commit history can't be edit, even after edited it doesn't save, read-only)
+Revert commit - Unsafe  (can be edit | can result commit history destroyed)
+Reset commit - Danger   (return back to the past commit and remove the present commit)
+
+git checkout <filename>     (Read the old commit)
+git switch -  (or)  git checkout <HEAD branch>  (Return back to original commit)
+
+git revert <filename>       (Move to old commit and create new commit in the old spot)
+
+git reset <filename>        (Change to the past commit without removing everything)
+git reset <filename> --hard (Change to the past commit with removing everything)
+
+
+Working with branch, merge
+--------------------------
+git branch <branch-name>    (Create new branches)
+git branch -a               (Show all branches)
+git checkout <branch-name>  (Change current branch)
+git branch -b <branch-name> (Create and Change to new branch)
+git branch -d <branch-name> (Delete branch)
+
+
+Working with remote-repo
+------------------------
+git branch -M <branch-name>         (Set Master branch)
+git remote add origin <url>         (Adding remote origin)
+git remote -v                       (Check curretn remote origin)
+
+git push -u origin <branch-name>    (Push the files to remote-repo)
+git push -f origin <branch-name>    (Force Push the files to remote-repo, Even when local commit is behind the remote commit)
+
+git pull <url>                      (Pulling the master branch from remote-repo)
+
+git push origin -d <branch-name>    (Delete the remote-repo branch)
+
+
+vecho "# blog-laravel" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Linn-Htet123/blog-laravel.git
+git push -u origin main
