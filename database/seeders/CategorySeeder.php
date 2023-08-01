@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -18,12 +19,13 @@ class CategorySeeder extends Seeder
         foreach ($categories as $category){
             $toAdd[] = [
                 'title' => $category,
-                'user_id' => rand(1,11),
+                'slug' => Str::slug($category),
+                'user_id' => 11,
                 "created_at" => now(),
                 "updated_at" => now()
             ];
 
-            Category::insert($toAdd);
         }
+        Category::insert($toAdd);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
@@ -31,6 +32,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',Category::class);
         return view('category.create');
     }
 
@@ -39,6 +41,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+//        $this->authorize('create',Category::class);
         Category::create([
             "title" => $request->title,
             "user_id" => Auth::id(),
@@ -59,6 +62,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+//        $this->authorize('update',$category);
         return view('category.edit',compact('category'));
     }
 
@@ -67,6 +71,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+//        Gate::authorize('update',$category);
+//        if($request->user()->cannot('update',$category)){
+//            return abort(403);
+//        }
         $category->update([
             "title" => $request->title
         ]);

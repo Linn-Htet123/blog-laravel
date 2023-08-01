@@ -24,6 +24,8 @@
                             Name
                         </th>
                         <th>Email</th>
+                        <th>Category count</th>
+                        <th>Article count</th>
 {{--                        <th>Control</th>--}}
                         <th>Created at</th>
                     </tr>
@@ -34,6 +36,9 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{$user->email}}</td>
+                            <td>{{$user->categories->count()}}</td>
+                            <td>{{$user->articles->count()}}</td>
+
 {{--                            <td>--}}
 {{--                                <div class="btn-group">--}}
 {{--                                    <a class=" btn btn-sm btn-outline-dark" href="{{ route('article.show', $user->id) }}">--}}

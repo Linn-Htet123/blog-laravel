@@ -30,7 +30,9 @@
                     </th>
                     <th>Description</th>
                     <th>Category</th>
-                    <th>Created by</th>
+                    @can('admin-only')
+                        <th>Created by</th>
+                    @endcan
                     <th>Control</th>
                     <th>Created at</th>
                     <th>Updated at</th>
@@ -42,19 +44,26 @@
                         <td>{{ $article->id }}</td>
                         <td>{{ $article->title }}</td>
                         <td>{{ Str::limit($article->description, 30, '...') }}</td>
-                        <td>{{$article->category_id}}</td>
-                        <td>{{$article->user_id}}</td>
+                        <td>{{$article->category->title ?? '-'}}</td>
+                        @can('admin-only')
+                            <td>{{$article->user->name}}</td>
+                        @endcan
                         <td>
                            <div class="btn-group">
                                <a class=" btn btn-sm btn-outline-dark" href="{{ route('article.show', $article->id) }}">
                                    <i class="bi bi-info"></i>
                                </a>
-                               <a href="{{ route('article.edit', $article->id) }}" class="btn btn-sm btn-outline-dark">
-                                   <i class="bi bi-pen-fill"></i>
-                               </a>
-                               <button class=" btn btn-sm btn-outline-dark" form="articleDeleteForm{{$article->id}}">
-                                   <i class="bi bi-trash"></i>
-                               </button>
+                               @can('update',$article)
+                                   <a href="{{ route('article.edit', $article->id) }}" class="btn btn-sm btn-outline-dark">
+                                       <i class="bi bi-pen-fill"></i>
+                                   </a>
+                               @endcan
+                                @can('delete',$article)
+                                   <button class=" btn btn-sm btn-outline-dark" form="articleDeleteForm{{$article->id}}">
+                                       <i class="bi bi-trash"></i>
+                                   </button>
+                               @endcan
+
                            </div>
                             <form id="articleDeleteForm{{$article->id}}" class=" d-inline-block" action="{{ route('article.destroy', $article->id) }}" method="post">
                                 @method('delete')

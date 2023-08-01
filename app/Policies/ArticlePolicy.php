@@ -11,6 +11,13 @@ class ArticlePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function before(User $user)
+    {
+        if ($user->role == 'admin'){
+            return true;
+        }
+        return null;
+    }
     public function viewAny(User $user): bool
     {
         //
@@ -37,7 +44,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        //
+        return $user->id == $article->user_id;
     }
 
     /**
@@ -45,7 +52,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        //
+        return $user->id == $article->user_id;
     }
 
     /**

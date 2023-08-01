@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Gate;
 
 
 class ArticleController extends Controller
@@ -18,10 +19,15 @@ class ArticleController extends Controller
     {
 
         $articles = Article::when(request()->has("keyword"),function($query){
-            $keyword = request()->keyword;
-            $query->where("title","like","%".$keyword."%");
-            $query->orWhere("description","like","%".$keyword."%");
+           $query->where(function(Builder $query){
+               $keyword = request()->keyword;
+               $query->where("title","like","%".$keyword."%");
+               $query->orWhere("description","like","%".$keyword."%");
+           });
         })
+            ->when(Auth::user()->role == 'user',function($query){
+                $query->where("user_id",Auth::id());
+            })
             ->when(request()->has('name'),function($query){
                 $sortType = request()->name ?? 'asc';
                 $query->orderBy("title",$sortType);
@@ -66,6 +72,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        $this->authorize('update',$article);
         return view('article.edit',compact('article'));
     }
 
@@ -74,6 +81,13 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
+//        if(!Gate::allows('article-update',$article)){
+//            abort(403,"you can't update this becoz you are bull shit");
+//        }
+//        if (Gate::denies('article-update',$article)){
+//            abort(403,'No way');
+//        }
+        $this->authorize('update',$article);
        $article->update([
            'title' => $request->title,
            'description' => $request->description,
@@ -89,6 +103,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete',$article);
         $article->delete();
         return redirect()->route('article.index')->with(['message'=>$article->title.'deleted successfully']);
     }

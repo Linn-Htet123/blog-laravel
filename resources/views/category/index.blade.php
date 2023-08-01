@@ -37,15 +37,19 @@
                     <tr>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->title }}</td>
-                        <td>{{$category->user_id}}</td>
+                        <td>{{$category->user->name}}</td>
                         <td>
                            <div class="btn-group">
-                               <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-outline-dark">
-                                   <i class="bi bi-pen-fill"></i>
-                               </a>
-                               <button class=" btn btn-sm btn-outline-dark" form="categoryDeleteForm{{$category->id}}">
-                                   <i class="bi bi-trash"></i>
-                               </button>
+                             @can('update',App\Models\Category::class)
+                                   <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-outline-dark">
+                                       <i class="bi bi-pen-fill"></i>
+                                   </a>
+                             @endcan
+                             @can('delete',$category)
+                                     <button class=" btn btn-sm btn-outline-dark" form="categoryDeleteForm{{$category->id}}">
+                                         <i class="bi bi-trash"></i>
+                                     </button>
+                             @endcan
                            </div>
                             <form id="categoryDeleteForm{{$category->id}}" class=" d-inline-block" action="{{ route('category.destroy', $category->id) }}" method="post">
                                 @method('delete')

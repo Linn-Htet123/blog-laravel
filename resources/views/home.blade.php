@@ -16,6 +16,10 @@
 
                     {{ __('You are logged in!') }}
                         <i class="bi bi-trash-fill"></i>
+                        <code>
+                            {{Auth::user()}}
+
+                        </code>
                 </div>
             </div>
         </div>

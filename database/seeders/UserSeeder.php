@@ -18,10 +18,11 @@ class UserSeeder extends Seeder
         User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'user01@gmail.com',
+            'name' => 'user01',
             'email' => 'user01@gmail.com',
             'password' => Hash::make('password'),
-            'remember_token' => Str::random()
+            'remember_token' => Str::random(),
+            'role' => 'admin'
         ]);
     }
 }
